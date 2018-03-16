@@ -1,10 +1,8 @@
-import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Root from './components/Root';
 import './css/index.scss';
-
 
 const render = Component => {
     ReactDOM.render(
@@ -18,7 +16,6 @@ const render = Component => {
 render(Root);
 
 if (module.hot) {
-//module.hot.accept('./reducers', () => store.replaceReducer(reducer));
     module.hot.accept('./components/Root', () => {
         const NextRoot = require('./components/Root').default;
         render(NextRoot);

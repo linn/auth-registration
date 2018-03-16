@@ -13,7 +13,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'build'),
         filename: 'app.js',
-        publicPath: '/register/build'
+        publicPath: '/register/build/'
     },
     module: {
         rules: [
@@ -90,4 +90,5 @@ module.exports = {
                 'appRoot': JSON.stringify('http://localhost:63670')
             }
         })
-    ]};
+    ]
+};

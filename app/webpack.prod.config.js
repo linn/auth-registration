@@ -12,7 +12,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'build'),
         filename: 'app.js',
-        publicPath: '/register/build'
+        publicPath: '/register/build/'
     },
     module: {
         rules: [
@@ -29,7 +29,7 @@ module.exports = {
                     loader: 'url-loader',
                     query: {
                         limit: 10000,
-                        name: '/media/[name].[hash:8].[ext]'
+                        name: 'media/[name].[hash:8].[ext]'
                     }
                 }
             },
@@ -53,7 +53,7 @@ module.exports = {
                 use: {
                     loader: 'file-loader',
                     query: {
-                        name: '/media/[name].[hash:8].[ext]'
+                        name: 'media/[name].[hash:8].[ext]'
                     }
                 }
             }
