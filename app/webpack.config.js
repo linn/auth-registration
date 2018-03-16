@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -85,6 +86,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(), // enable HMR globally
         new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
         new webpack.NoEmitOnErrorsPlugin(), // do not emit compiled assets that include errors
+        new CopyWebpackPlugin([{ from: 'assets', to: 'assets' }]),
         new webpack.DefinePlugin({
             'PROCESS.ENV': {
                 'appRoot': JSON.stringify('http://localhost:63670')

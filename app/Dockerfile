@@ -9,7 +9,6 @@ RUN npm install --only=production
 COPY prodServer.js .
 COPY index.html .
 COPY build/ build/
-COPY assets/ assets/
 
 EXPOSE 3000
 

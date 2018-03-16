@@ -1,14 +1,13 @@
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
-const path = require('path');
 
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
     // proxy: {
-    //     '/sales/pricing/assets': {
+    //     '/register/assets': {
     //         target: 'http://localhost:63670',
     //         secure: false
     //     }
