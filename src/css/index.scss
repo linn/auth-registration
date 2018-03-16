@@ -1,0 +1,77 @@
+@font-face {
+    font-family: 'Weissenhof';
+    src: url('../fonts/weissenhof-lt.woff2') format('woff2'), url('../fonts/weissenhof-lt.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Weissenhof';
+    //src: url('../fonts/weissenhof-lt-italic.woff2') format('woff2'), url('../fonts/weissenhof-lt-italic.woff') format('woff');
+     src: url('../fonts/weissenhof-lt-italic.woff2') format('woff2');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Weissenhof';
+    src: url('../fonts/weissenhof.woff2') format('woff2'), url('../fonts/weissenhof.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Weissenhof';
+    src: url('../fonts/weissenhof-md.woff2') format('woff2'), url('../fonts/weissenhof-md.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+body,
+input:not([type]),
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+    font-family: 'Weissenhof', Roboto, Arial, Helvetica, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.225;
+    font-weight: 200;
+}
+
+div,
+button,
+input,
+ul,
+li {
+    box-sizing: border-box;
+}
+
+
+@keyframes stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.2);
+        -webkit-transform: scaleY(0.2);
+    }
+
+    20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+    }
+}
+
+@-webkit-keyframes stretchdelay {
+    0%, 40%, 100% {
+        -webkit-transform: scaleY(0.2);
+    }
+
+    20% {
+        -webkit-transform: scaleY(1.0);
+    }
+}
