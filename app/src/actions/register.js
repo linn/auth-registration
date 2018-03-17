@@ -43,10 +43,8 @@ const config = {
     wwwRoot: 'https://www-sys.linn.co.uk'
 };
 
-export const register = (dispatch, getState, getProps) => async (username, password) => {
+export const register = (dispatch, getState) => async (username, password, history) => {
     try {
-        const { history } = getProps();
-
         dispatch(beginRegistrationRequest());
 
         const body = { username, password };

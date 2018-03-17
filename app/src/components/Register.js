@@ -61,9 +61,10 @@ class Register extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        const { email, password, history } = this.props;
 
         if (this.validate()) {
-            this.props.onSubmit();
+            this.props.onSubmit(email, password, history);
         }
     }
 

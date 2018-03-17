@@ -15,6 +15,7 @@ export const connect = reduce => (mapDispatchToProps = {}) => ComposedComponent 
 
     render() {
         return <ComposedComponent
+            {...this.props}
             {...this.state}
             {...mapDispatchToProps(action => this.dispatch(action), () => this.state, () => this.props)}
         />
