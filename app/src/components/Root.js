@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Header from './Header';
-import Register from './Register';
+import Register from '../containers/Register';
 import RegisterSuccess from './RegisterSuccess';
 
 class Root extends Component {
