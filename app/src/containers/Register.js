@@ -4,14 +4,11 @@ import Register from '../components/Register';
 import register from '../reducers/register';
 import { setEmail, setPassword, setPassword2, register2 } from '../actions/register';
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, getState) => ({
     onEmailChange: val => dispatch(setEmail(val)),
     onPasswordChange: val => dispatch(setPassword(val)),
-    onPassword2Change: val => dispatch(setPassword2(val))
+    onPassword2Change: val => dispatch(setPassword2(val)),
+    onSubmit: () => register2(dispatch, getState)()
 });
 
-const mapThunkToProps = (dispatch, getState) => ({
-    onSubmit: () => register2(dispatch, getState)('hi')
-})
-
-export default connect(register)(mapDispatchToProps, mapThunkToProps)(Register);
+export default connect(register)(mapDispatchToProps)(Register);

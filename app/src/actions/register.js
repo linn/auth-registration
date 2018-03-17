@@ -1,4 +1,5 @@
 import { postJson } from '../helpers/json';
+import isEmail from 'validator/lib/isEmail';
 
 export const actionTypes = {
     SET_EMAIL: 'SET_EMAIL',
@@ -58,14 +59,7 @@ export const register = async (username, password) => {
     }
 };
 
-export const register2 = (dispatch, getState) =>  args =>{
-    console.log('===========')
-    console.log(args);
-    console.log(dispatch);
-    console.log(getState);
-    console.log('===========')
-
-
+export const register2 = (dispatch, getState) => () => {
     const state = getState();
     const { email, password, password2 } = state;
 

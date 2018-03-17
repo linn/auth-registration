@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import isEmail from 'validator/lib/isEmail';
 import { setValidationErrors } from './actions/register';
 
-export const connect = reduce => (mapDispatchToProps = {}, mapThunkToProps = {}) => ComposedComponent => class extends Component {
+export const connect = reduce => (mapDispatchToProps = {}) => ComposedComponent => class extends Component {
 
     constructor(props) {
         super(props);
@@ -14,16 +13,10 @@ export const connect = reduce => (mapDispatchToProps = {}, mapThunkToProps = {})
         this.setState(state => reduce(state, action));
     }
 
-    doThunk(dispatch, getState) {
-        thunk(this.dispatch, () => this.state);
-    }
-
     render() {
         return <ComposedComponent
             {...this.state}
-            // onSubmit={e => this.handleSubmit(e)}
-            {...mapDispatchToProps(action => this.dispatch(action))}
-            {...mapThunkToProps(thunk => thunk(this.dispatch, () => this.state)) }
+            {...mapDispatchToProps(action => this.dispatch(action), () => this.state)}
         />
     }
 
