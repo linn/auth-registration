@@ -10,8 +10,8 @@ const mapDispatchToProps = dispatch => ({
     onPassword2Change: val => dispatch(setPassword2(val))
 });
 
-const mapThunkToProps = () => ({
-    onSubmit: () => register2()
+const mapThunkToProps = (dispatch, getState) => ({
+    onSubmit: () => register2(dispatch, getState)('hi')
 })
 
 export default connect(register)(mapDispatchToProps, mapThunkToProps)(Register);

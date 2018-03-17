@@ -58,7 +58,7 @@ export const register = async (username, password) => {
     }
 };
 
-export const register2 = args => (dispatch, getState) => {
+export const register2 = (dispatch, getState) =>  args =>{
     console.log('===========')
     console.log(args);
     console.log(dispatch);
