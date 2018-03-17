@@ -1,9 +1,9 @@
 import { actionTypes } from '../actions/register';
 
-const defaultState = {
-    email: 'sandy@cormie.com',
-    password: 'sandycormie',
-    password2: 'sandycormie',
+const intitialState = {
+    email: '',
+    password: '',
+    password2: '',
     errors: {
         email: '',
         password: '',
@@ -13,7 +13,7 @@ const defaultState = {
     processing: false
 }
 
-const register = (prevState = defaultState, action) => {
+const registerReducer = (prevState = intitialState, action) => {
     switch (action.type) {
         case actionTypes.SET_EMAIL:
             return ({ ...prevState, email: action.payload });
@@ -38,4 +38,4 @@ const register = (prevState = defaultState, action) => {
     }
 };
 
-export default register;
+export default registerReducer;
