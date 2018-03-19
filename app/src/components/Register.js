@@ -22,9 +22,9 @@ class Register extends Component {
         return <Template
             {...this.state}
             onSubmit={e => this.handleSubmit(e)}
-            onEmailChange={val => this.setState({ email: val })}
-            onPasswordChange={val => this.setState({ password: val })}
-            onPassword2Change={val => this.setState({ password2: val })}
+            onEmailChange={email => this.setState({ email })}
+            onPasswordChange={password => this.setState({ password })}
+            onPassword2Change={password2 => this.setState({ password2 })}
         />
     }
 
