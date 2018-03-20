@@ -10,7 +10,7 @@ const style = {
 class Header extends Component {
     render() {
         const { location } = this.props;
-        const { search } = location;
+        const search = location.search;
 
         if (search.includes('embedded=true')) {
             return false;
