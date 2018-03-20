@@ -10,7 +10,8 @@ app.use('/register/assets', express.static(path.join(__dirname, 'assets')))
 
 const htmlPaths = [
     '/register',
-    '/register/success'
+    '/register/success',
+    '/password-reset*'
 ];
 
 app.get(htmlPaths, function (req, res) {
