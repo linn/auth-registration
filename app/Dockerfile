@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install --only=production
 
 COPY prodServer.js .
-COPY index.html .
+COPY views/index.pug views/index.pug
 COPY build/ build/
 
 EXPOSE 3000

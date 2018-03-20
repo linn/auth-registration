@@ -1,5 +1,5 @@
-Description: Pricing
-AWSTemplateFormatVersion: '2010-09-09'
+Description: Auth - Registration
+AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   targetCluster:
     Type: String
@@ -7,42 +7,9 @@ Parameters:
   dockerTag:
     Type: String
     Description: Docker tag to deploy
-  appRoot:
+  wwwRoot:
     Type: String
-    Description: app root
-  proxyRoot:
-    Type: String
-    Description: proxy root
-  databaseHost:
-    Type: String
-    Description: Database host
-  databaseName:
-    Type: String
-    Description: Database name
-  databaseUserId:
-    Type: String
-    Description: Database user id
-  databasePassword:
-    Type: String
-    Description: Database password
-  rabbitServer:
-    Type: String
-    Description: Rabbit server
-  rabbitPort:
-    Type: Number
-    Description: Rabbit port
-  rabbitUsername:
-    Type: String
-    Description: Rabbit username
-  rabbitPassword:
-    Type: String
-    Description: Rabbit password
-  loggingEnvironment:
-    Type: String
-    Description: Logging Environment
-  loggingMaxInnerExceptionDepth:
-    Type: Number
-    Description: Logging Max Inner Exception Depth
+    Description: WWW root for calling API
   desiredCount:
     Type: String
     Description: Desired number of instances
@@ -50,135 +17,36 @@ Parameters:
     Type: String
     Description: Environment suffix e.g -int -sys
 Resources:
-  pricingRole:
-    Type: AWS::IAM::Role
+  taskDefinition:
+    Type: 'AWS::ECS::TaskDefinition'
     Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: "Allow"
-            Principal:
-              Service: [ "ecs-tasks.amazonaws.com" ]
-            Action: [ "sts:AssumeRole" ]
-      Path: "/"
-      Policies:
-      - PolicyName: pricingServices
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: Allow
-            Action:
-            - sqs:SendMessage
-            Resource:
-              Fn::ImportValue: logging-queue-arn
-  pricingTaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties:
-      TaskRoleArn: !GetAtt pricingRole.Arn
       ContainerDefinitions:
-      - Name: pricing
-        Cpu: '1'
-        Essential: 'true'
-        Image: !Sub docker.io/linn/pricing:${dockerTag}
-        PortMappings:
-        - ContainerPort: 5050
-        Memory: '250'
-        LogConfiguration:
-          LogDriver: gelf
-          Options:
-            'gelf-address': 'udp://syslog.linn.co.uk:12201'
-            'tag': !Sub pricing-${dockerTag}-ecs-task
-        Environment:
-        - Name: DATABASE_HOST
-          Value: !Ref databaseHost
-        - Name: DATABASE_NAME
-          Value: !Ref databaseName
-        - Name: DATABASE_USER_ID
-          Value: !Ref databaseUserId
-        - Name: DATABASE_PASSWORD
-          Value: !Ref databasePassword
-        - Name: RABBIT_SERVER
-          Value: !Ref rabbitServer
-        - Name: RABBIT_PORT
-          Value: !Ref rabbitPort
-        - Name: RABBIT_USERNAME
-          Value: !Ref rabbitUsername
-        - Name: RABBIT_PASSWORD
-          Value: !Ref rabbitPassword
-        - Name: APP_ROOT
-          Value: !Ref appRoot
-        - Name: PROXY_ROOT
-          Value: !Ref proxyRoot
-        - Name: LOG_AMAZON_SQSQUEUEURI
-          Value: !ImportValue logging-queue-url
-        - Name: LOG_ENVIRONMENT
-          Value: !Ref loggingEnvironment
-        - Name: LOG_MAX_INNER_EXCEPTION_DEPTH
-          Value: !Ref loggingMaxInnerExceptionDepth
-        - Name: awsRegion
-          Value: !Ref AWS::Region
-  pricingMessagingTaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties:
-      TaskRoleArn: !GetAtt pricingRole.Arn
-      ContainerDefinitions:
-      - Name: pricing
-        Cpu: '1'
-        Essential: 'true'
-        Image: !Sub docker.io/linn/pricing-messaging:${dockerTag}
-        PortMappings:
-        - ContainerPort: 5050
-        Memory: '150'
-        LogConfiguration:
-          LogDriver: gelf
-          Options:
-            'gelf-address': 'udp://syslog.linn.co.uk:12201'
-            'tag': !Sub pricing-messaging-${dockerTag}-ecs-task
-        Environment:
-        - Name: DATABASE_HOST
-          Value: !Ref databaseHost
-        - Name: DATABASE_NAME
-          Value: !Ref databaseName
-        - Name: DATABASE_USER_ID
-          Value: !Ref databaseUserId
-        - Name: DATABASE_PASSWORD
-          Value: !Ref databasePassword
-        - Name: RABBIT_SERVER
-          Value: !Ref rabbitServer
-        - Name: RABBIT_PORT
-          Value: !Ref rabbitPort
-        - Name: RABBIT_USERNAME
-          Value: !Ref rabbitUsername
-        - Name: RABBIT_PASSWORD
-          Value: !Ref rabbitPassword
-        - Name: APP_ROOT
-          Value: !Ref appRoot
-        - Name: PROXY_ROOT
-          Value: !Ref proxyRoot
-        - Name: LOG_AMAZON_SQSQUEUEURI
-          Value: !ImportValue logging-queue-url
-        - Name: LOG_ENVIRONMENT
-          Value: !Ref loggingEnvironment
-        - Name: LOG_MAX_INNER_EXCEPTION_DEPTH
-          Value: !Ref loggingMaxInnerExceptionDepth
-        - Name: awsRegion
-          Value: !Ref AWS::Region
-  pricingService:
-    Type: AWS::ECS::Service
+        - Name: auth-registration
+          Cpu: '1'
+          Essential: 'true'
+          Image: !Sub 'docker.io/linn/auth-registration:${dockerTag}'
+          PortMappings:
+            - ContainerPort: 3000
+          Memory: '150'
+          LogConfiguration:
+            LogDriver: gelf
+            Options:
+              gelf-address: 'udp://syslog.linn.co.uk:12201'
+              tag: !Sub 'auth-registration-${dockerTag}-ecs-task'
+          Environment:
+            - Name: WWW_ROOT
+              Value: !Ref wwwRoot
+            - Name: awsRegion
+              Value: !Ref 'AWS::Region'
+  service:
+    Type: 'AWS::ECS::Service'
     Properties:
       Cluster: !Ref targetCluster
       DesiredCount: !Ref desiredCount
-      TaskDefinition: !Ref pricingTaskDefinition
+      TaskDefinition: !Ref taskDefinition
       Role: ecsServiceRole
       LoadBalancers:
-      - ContainerName: pricing
-        ContainerPort: 5050
-        TargetGroupArn:
-          Fn::ImportValue:
-            !Sub "pricing-target-group-arn${environmentSuffix}"
-  pricingMessagingService:
-    Type: AWS::ECS::Service
-    Properties:
-      Cluster: !Ref targetCluster
-      DesiredCount: 1
-      TaskDefinition: !Ref pricingMessagingTaskDefinition
+        - ContainerName: auth-registration
+          ContainerPort: 3000
+          TargetGroupArn: !ImportValue 
+            'Fn::Sub': 'authRegistrationTargetGroupArn${environmentSuffix}'

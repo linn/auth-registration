@@ -16,7 +16,6 @@ class Header extends Component {
             return false;
         }
 
-
         return (
             <div style={style}>
                 <Logo />
