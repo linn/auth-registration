@@ -1,8 +1,5 @@
 import { postJson } from '../helpers/json';
-
-const config = {
-    wwwRoot: 'https://www-sys.linn.co.uk'
-};
+import config from '../config';
 
 export const register = async (username, password) => {
     try {

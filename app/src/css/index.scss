@@ -33,6 +33,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 button {
+    -webkit-appearance: none;
     font-family: 'Weissenhof', Roboto, Arial, Helvetica, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
