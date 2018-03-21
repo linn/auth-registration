@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { TextInput, Button, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
+import { TextInput, Button, Cancel, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
 
 class RequestPasswordReset extends Component {
 
     render() {
         document.title = 'Reset your password | Linn';
 
-        const { processing, email, errors, onSubmit, onEmailChange, embedded } = this.props;
+        const { processing, email, errors, onSubmit, onEmailChange, embedded, returnUrl } = this.props;
 
         return (
             <Container embedded={embedded} >
@@ -30,7 +30,10 @@ class RequestPasswordReset extends Component {
                     <ControlGroup padding="30px">
                         {processing
                             ? <Processing embedded={embedded} />
-                            : <Button caption="Submit" type="submit" disabled={processing} embedded={embedded} />
+                            : <React.Fragment>
+                                <Button caption="Submit" type="submit" disabled={processing} embedded={embedded} />
+                                {embedded && returnUrl && <Cancel href={returnUrl} />}
+                            </React.Fragment>
                         }
                     </ControlGroup>
                 </form>

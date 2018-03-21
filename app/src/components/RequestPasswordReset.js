@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Template from './templates/RequestPasswordReset';
 import isEmail from 'validator/lib/isEmail';
 import { requestPasswordReset } from '../actions';
-import { isEmbedded } from '../helpers';
+import { getReturnUrl, isEmbedded } from '../helpers';
 
 class RequestPasswordReset extends Component {
 
@@ -19,6 +19,7 @@ class RequestPasswordReset extends Component {
         return <Template
             {...this.state}
             embedded={isEmbedded(location.search)}
+            returnUrl={getReturnUrl(location.search)}
             onSubmit={e => this.handleSubmit(e)}
             onEmailChange={email => this.setState({ email })}
         />

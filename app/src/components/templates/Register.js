@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { TextInput, Button, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
+import { TextInput, Button, Cancel, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
 
 class Register extends Component {
 
     render() {
         document.title = 'Register for a Linn account | Linn';
 
-        const { processing, email, password, password2, errors, onSubmit, onEmailChange, onPasswordChange, onPassword2Change, embedded } = this.props;
+        const { processing, email, password, password2, errors, onSubmit, onEmailChange, onPasswordChange, onPassword2Change, embedded, returnUrl } = this.props;
 
         return (
             <Container embedded={embedded} >
@@ -35,7 +35,7 @@ class Register extends Component {
                             value={password}
                             onChange={onPasswordChange}
                             error={errors.password}
-                            disabled={processing} 
+                            disabled={processing}
                             embedded={embedded} />
                     </ControlGroup>
                     <ControlGroup>
@@ -47,13 +47,16 @@ class Register extends Component {
                             value={password2}
                             onChange={onPassword2Change}
                             error={errors.password2}
-                            disabled={processing} 
+                            disabled={processing}
                             embedded={embedded} />
                     </ControlGroup>
                     <ControlGroup padding="30px">
                         {processing
                             ? <Processing embedded={embedded} />
-                            : <Button caption="Register" type="submit" disabled={processing} embedded={embedded} />
+                            : <React.Fragment>
+                                <Button caption="Register" type="submit" disabled={processing} embedded={embedded} />
+                                {embedded && returnUrl && <Cancel href={returnUrl} />}
+                            </React.Fragment>
                         }
                     </ControlGroup>
                 </form>

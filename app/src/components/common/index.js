@@ -1,4 +1,5 @@
 export * from './Button';
+export * from './Cancel';
 export * from './Container';
 export * from './ControlGroup';
 export * from './ErrorMessage';

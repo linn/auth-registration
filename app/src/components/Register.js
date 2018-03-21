@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Template from './templates/Register';
 import isEmail from 'validator/lib/isEmail';
 import { register } from '../actions';
-import { isEmbedded } from '../helpers';
+import { getReturnUrl, isEmbedded } from '../helpers';
 
 class Register extends Component {
 
@@ -25,6 +25,7 @@ class Register extends Component {
         return <Template
             {...this.state}
             embedded={isEmbedded(location.search)}
+            returnUrl={getReturnUrl(location.search)}
             onSubmit={e => this.handleSubmit(e)}
             onEmailChange={email => this.setState({ email })}
             onPasswordChange={password => this.setState({ password })}
