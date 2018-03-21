@@ -12,3 +12,7 @@ export const getReturnUrl = search => {
 
     return unescape(raw);
 };
+
+export const isEmbedded = search => {
+    return search.includes('embedded=true');
+}

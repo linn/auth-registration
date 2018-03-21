@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-const style = {
+const style = embedded => ({
     margin: '0 auto',
     maxWidth: '500px',
-    padding: '50px'
-};
+    padding: embedded ? '30px' : '50px'
+});
 
 export class Container extends Component {
     render() {
-        const { children  } = this.props;
+        const { children, embedded = false  } = this.props;
 
         return (
-            <div style={style}>{children}</div>
+            <div style={style(embedded)}>{children}</div>
         );
     }
 }
