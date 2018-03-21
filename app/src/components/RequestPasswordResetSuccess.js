@@ -2,23 +2,21 @@ import React, { Component } from 'react';
 import { Header, Container } from './common';
 import { getReturnUrl } from '../helpers';
 
-class RegisterSuccess extends Component {
+class RequestPasswordResetSuccess extends Component {
 
     render() {
         const { location } = this.props;
         const search = location.search;
         const returnUrl = getReturnUrl(search);
 
-        document.title = 'Register for a Linn account | Linn';
+        document.title = 'Reset your password | Linn';
 
         return (
             <Container>
-                <Header caption="Thanks!" />
-                <p>We've created your account.</p>
+                <Header caption="Success!" />
+                <p>We've received your request.</p>
 
-                <p>Before you can login, you need to verify your email address.</p>
-
-                <p>You should shortly receive a email from us. Once you've clicked the verification link in the email, you'll be able to log in and use the site.</p>
+                <p>You should receive a email from us shortly. Follow the link in the email to reset your password.</p>
 
                 {returnUrl &&
                     <p>Return to the <a href={returnUrl}>login page</a>.</p>
@@ -28,4 +26,4 @@ class RegisterSuccess extends Component {
     }
 }
 
-export default RegisterSuccess;
+export default RequestPasswordResetSuccess;

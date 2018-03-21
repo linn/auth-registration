@@ -54,6 +54,15 @@ li {
     box-sizing: border-box;
 }
 
+a, a:visited {
+    text-decoration: none;
+    color: rgb(0,137,137);
+    display: inline-block;
+    
+    &:hover {
+        border-bottom: 1px solid rgb(0,137,137);
+    }
+}
 
 @keyframes stretchdelay {
     0%, 40%, 100% {
