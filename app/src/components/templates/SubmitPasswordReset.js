@@ -6,10 +6,10 @@ class SubmitPasswordReset extends Component {
     render() {
         document.title = 'Reset your password | Linn';
 
-        const { processing, password, password2, errors, onSubmit, onPasswordChange, onPassword2Change } = this.props;
+        const { processing, password, password2, errors, onSubmit, onPasswordChange, onPassword2Change, embedded } = this.props;
 
         return (
-            <Container>
+            <Container embedded={embedded} >
                 <Header caption="Password Reset" />
                 <form onSubmit={onSubmit}>
                     {errors.passwordReset && <ErrorMessage message={errors.passwordReset} />}
@@ -23,7 +23,8 @@ class SubmitPasswordReset extends Component {
                             value={password}
                             onChange={onPasswordChange}
                             error={errors.password}
-                            disabled={processing} />
+                            disabled={processing}
+                            embedded={embedded} />
                     </ControlGroup>
                     <ControlGroup>
                         <TextInput
@@ -34,12 +35,13 @@ class SubmitPasswordReset extends Component {
                             value={password2}
                             onChange={onPassword2Change}
                             error={errors.password2}
-                            disabled={processing} />
+                            disabled={processing}
+                            embedded={embedded} />
                     </ControlGroup>
                     <ControlGroup padding="30px">
                         {processing
-                            ? <Processing />
-                            : <Button caption="Submit" type="submit" disabled={processing} />
+                            ? <Processing embedded={embedded} />
+                            : <Button caption="Submit" type="submit" disabled={processing} embedded={embedded} />
                         }
                     </ControlGroup>
                 </form>

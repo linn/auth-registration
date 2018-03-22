@@ -8,10 +8,10 @@ const styles = {
         display: 'block',
         marginBottom: '3px'
     },
-    input: disabled => ({
+    input: (disabled, embedded) => ({
         display: 'block',
         width: '100%',
-        padding: '20px',
+        padding: embedded ? '10px': '20px',
         fontSize: '18px',
         fontWeight: '200',
         border: '1px solid #c0c6ce',
@@ -27,14 +27,14 @@ const styles = {
 
 export class TextInput extends Component {
     render() {
-        const { name, type = 'text', caption, placeholder, error, value, disabled = false } = this.props;
+        const { name, type = 'text', caption, placeholder, error, value, disabled = false, embedded = false } = this.props;
 
         return (
             <React.Fragment>
                 <label style={styles.label} htmlFor={name}>{caption}</label>
                 <input
                     ref={el => { this.element = el; }}
-                    style={styles.input(disabled)}
+                    style={styles.input(disabled, embedded)}
                     type={type}
                     id={name}
                     name={name}

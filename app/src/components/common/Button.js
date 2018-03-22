@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 const styles = {
-    base:
-    {
+    base: embedded =>
+    ({
         fontSize: '18px',
         lineHeight: '1.225',
         cursor: 'pointer',
@@ -10,10 +10,10 @@ const styles = {
         transition: 'background-color 100ms',
         border: 'none',
         color: '#fff',
-        padding: '20px',
+        padding: embedded ? '10px' : '20px',
         width: '100%',
-        minHeight: '62px'
-    },
+        minHeight: embedded ? '42px' : '62px'
+    }),
     active: hovering => (
         {
             backgroundColor: hovering ? '#000' : '#333',
@@ -31,13 +31,13 @@ export class Button extends Component {
     }
 
     render() {
-        const { caption, type = 'button', disabled = false } = this.props;
+        const { caption, type = 'button', disabled = false, embedded = false } = this.props;
 
         const modifiedStyle = disabled ?
             styles.disabled :
             styles.active(this.state.hovering);
 
-        const style = { ...styles.base, ...modifiedStyle };
+        const style = { ...styles.base(embedded), ...modifiedStyle };
 
         return (
             <button

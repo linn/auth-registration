@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Logo } from './common';
+import { isEmbedded } from '../helpers';
 
 const style = {
     backgroundColor: '#373946',
@@ -10,9 +11,8 @@ const style = {
 class Header extends Component {
     render() {
         const { location } = this.props;
-        const search = location.search;
 
-        if (search.includes('embedded=true')) {
+        if (isEmbedded(location.search)) {
             return false;
         }
 
