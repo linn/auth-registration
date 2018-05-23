@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 const style = embedded => ({
     margin: '0 auto',
     maxWidth: '500px',
-    padding: embedded ? '30px' : '50px'
+    padding: embedded ? '20px 30px' : '50px'
 });
 
 export class Container extends Component {
