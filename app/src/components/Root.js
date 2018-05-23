@@ -7,6 +7,7 @@ import RequestPasswordReset from './RequestPasswordReset';
 import RequestPasswordResetSuccess from './RequestPasswordResetSuccess';
 import SubmitPasswordReset from './SubmitPasswordReset';
 import SubmitPasswordResetSuccess from './SubmitPasswordResetSuccess';
+import Verify from './Verify';
 import NotFound from './NotFound';
 
 class Root extends Component {
@@ -22,6 +23,7 @@ class Root extends Component {
                         <Route exact={true} path="/password-reset/success" component={RequestPasswordResetSuccess} />
                         <Route exact={true} path="/password-reset/:id" component={SubmitPasswordReset} />
                         <Route exact={true} path="/password-reset/:id/success" component={SubmitPasswordResetSuccess} />
+                        <Route exact={true} path="/verify/:id" component={Verify} />
                         <Route component={NotFound}/>
                     </Switch>
                 </div>
