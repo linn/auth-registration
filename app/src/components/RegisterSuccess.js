@@ -1,30 +1,79 @@
 import React, { Component } from 'react';
-import { Header, Container } from './common';
-import { getReturnUrl } from '../helpers';
+import Template from './templates/RegisterSuccess';
+import { verify } from '../actions';
+import { getReturnUrl, getUsername, isEmbedded } from '../helpers';
 
 class RegisterSuccess extends Component {
+    state = {
+        activationCode: '',
+        errors: {
+            activationCode: '',
+            verification: ''
+        },
+        processing: false
+    }
 
     render() {
         const { location } = this.props;
-        const search = location.search;
-        const returnUrl = getReturnUrl(search);
 
-        document.title = 'Register for a Linn account | Linn';
+        return <Template
+            {...this.state}
+            embedded={isEmbedded(location.search)}
+            returnUrl={getReturnUrl(location.search)}
+            onSubmit={e => this.handleSubmit(e)}
+            onActivationCodeChange={activationCode => this.setState({ activationCode })}
+        />;
+    }
 
-        return (
-            <Container>
-                <Header caption="Thanks!" />
-                <p>We've created your account.</p>
+    handleSubmit(e) {
+        e.preventDefault();
+        const { location, history } = this.props;
 
-                <p>Before you can login, you need to verify your email address.</p>
+        if (this.validate()) {
+            this.setState({ processing: true });
 
-                <p>You should shortly receive a email from us. Once you've clicked the verification link in the email, you'll be able to log in and use the site.</p>
+            const username= getUsername(location.search);
 
-                {returnUrl &&
-                    <p>Return to the <a href={returnUrl}>login page</a>.</p>
+            verify(this.state.activationCode, username).then(result => {
+
+                if (result.success) {
+                    history.push('/register/success' + history.location.search);
                 }
-            </Container>
-        );
+                else {
+                    const message = result.error.hasMessage
+                        ? result.error.message
+                        : 'Sorry! Something\'s gone wrong.  Please try again later.';
+
+                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, registration: message } }));
+                }
+            });
+        }
+    }
+
+    validate() {
+        let valid = true;
+
+        const errors = {
+            email: '',
+            password: '',
+            password2: '',
+            registration: ''
+        }
+
+        const { activationCode } = this.state;
+
+        if (!activationCode) {
+            errors.activationCode = 'You must enter your six-character activation code';
+            valid = false;
+        }
+        else if (activationCode.length !== 6) {
+            errors.activationCode = 'The activation code should be six characters long';
+            valid = false;
+        }
+
+        this.setState({ errors });
+
+        return valid;
     }
 }
 

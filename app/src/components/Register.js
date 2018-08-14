@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Template from './templates/Register';
 import isEmail from 'validator/lib/isEmail';
 import { register } from '../actions';
-import { getReturnUrl, isEmbedded } from '../helpers';
+import { getReturnUrl, isEmbedded, addQuery } from '../helpers';
 
 class Register extends Component {
 
@@ -20,7 +20,7 @@ class Register extends Component {
     }
 
     render() {
-        const { history, location } = this.props;
+        const { location } = this.props;
 
         return <Template
             {...this.state}
@@ -42,7 +42,7 @@ class Register extends Component {
 
             register(this.state.email, this.state.password).then(result => {
                 if (result.success) {
-                    history.push('/register/success' + history.location.search);
+                    history.push('/register/success' + addQuery(history.location.search, `username=${encodeURIComponent(this.state.email)}`));
                 }
                 else {
                     const message = result.error.hasMessage
