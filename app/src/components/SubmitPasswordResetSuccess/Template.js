@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
-import { Header, Container } from './common';
-import { getReturnUrl } from '../helpers';
+import React from 'react';
+import { Header, Container } from '../common';
 
-class SubmitPasswordResetSuccess extends Component {
+class Template extends React.Component {
 
     render() {
-        const { location } = this.props;
-        const search = location.search;
-        const returnUrl = getReturnUrl(search);
-
         document.title = 'Reset your password | Linn';
 
+        const { embedded, returnUrl } = this.props;
+
         return (
-            <Container>
+            <Container embedded={embedded}>
                 <Header caption="Success!" />
                 <p>You're password has been updated.</p>
 
@@ -25,4 +22,4 @@ class SubmitPasswordResetSuccess extends Component {
     }
 }
 
-export default SubmitPasswordResetSuccess;
+export default Template;

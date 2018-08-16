@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TextInput, Button, Cancel, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
 
-class Register extends Component {
+class Template extends React.Component {
 
     render() {
         document.title = 'Register for a Linn account | Linn';
@@ -12,7 +12,7 @@ class Register extends Component {
             <Container embedded={embedded} >
                 <Header caption="Register" />
                 <form onSubmit={onSubmit}>
-                    {errors.registration && <ErrorMessage message={errors.registration} />}
+                    {errors.server && <ErrorMessage message={errors.server} />}
                     <ControlGroup>
                         <TextInput
                             autofocus={true}
@@ -65,4 +65,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default Template;

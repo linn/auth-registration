@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import Template from './templates/SubmitPasswordReset';
-import isEmail from 'validator/lib/isEmail';
-import { submitPasswordReset } from '../actions';
-import { isEmbedded } from '../helpers';
+import React from 'react';
+import Template from './Template';
+import { submitPasswordReset } from '../../actions';
+import { isEmbedded } from '../../helpers';
 
-class SubmitPasswordReset extends Component {
+class SubmitPasswordReset extends React.Component {
 
     state = {
         password: '',
@@ -12,7 +11,7 @@ class SubmitPasswordReset extends Component {
         errors: {
             password: '',
             password2: '',
-            passwordReset: ''
+            server: ''
         },
         processing: false
     }
@@ -40,11 +39,9 @@ class SubmitPasswordReset extends Component {
                     history.push(`/password-reset/${id}/success` + history.location.search);
                 }
                 else {
-                    const message = result.error.hasMessage
-                        ? result.error.message
-                        : 'Sorry! Something\'s gone wrong.  Please try again later.';
+                    const message = result.error.message || 'Sorry, something\'s gone wrong.  Please try again later.';
 
-                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, passwordReset: message } }));
+                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, server: message } }));
                 }
             });
         }
@@ -56,10 +53,10 @@ class SubmitPasswordReset extends Component {
         const errors = {
             password: '',
             password2: '',
-            passwordReset: ''
+            server: ''
         }
 
-        const { email, password, password2 } = this.state;
+        const { password, password2 } = this.state;
 
         if (!password) {
             errors.password = 'You must specify a password';

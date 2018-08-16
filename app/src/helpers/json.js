@@ -1,55 +1,37 @@
-import es6promise from 'es6-promise';
-import fetch from 'isomorphic-fetch';
-
-es6promise.polyfill();
-
 const jsonHeaders = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
 };
 
-export const postJson = async (url, body) => {
-    let response = await fetch(url,
+export const postJson = (url, body) => {
+    return fetch(url,
         {
             method: 'POST',
             headers: jsonHeaders,
             body: body && typeof body !== 'string' ? JSON.stringify(body) : '',
             credentials: 'same-origin'
-        });
-
-    if (response.ok && response.status === 204) {
-        return null;
-    }
-
-    return await processResponse(response);
+        })
+        .then(checkStatus)
+        .then(response => response.json());
 };
 
-async function processResponse(response) {
+const checkStatus = async response => {
     if (response.ok) {
-        return await response.json();
+        return response;
     } else {
-        let jsonError = null;
+        var error = new Error(response.statusText);
+        error.response = response;
 
         try {
-            jsonError = await response.json();
+            const jsonError = await response.json();
+            const { errorMessage, errors} = jsonError;
+
+            error.message = errorMessage || errors;
         }
-        catch (e) {
-            throw new Error(response.statusText);
+        catch (e) { 
+            error.message = response.statusText;
         }
 
-        if (jsonError) {
-            if (jsonError.errorMessage) {
-                const error = new Error(jsonError.errorMessage);
-                error.hasMessage = true;
-                throw error;
-            }
-            else if (jsonError.errors) {
-                const error = new Error(jsonError.errors);
-                error.hasMessage = true;
-                throw error;
-            }
-        }
-
-        throw new Error(response.statusText);
+        throw error;
     }
-}
+};

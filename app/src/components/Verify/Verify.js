@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Header, Container } from './common';
-import { getReturnUrl } from '../helpers';
+import React from 'react';
+import { Header, Container } from '../common';
+import { getReturnUrl } from '../../helpers';
 
-class Verify extends Component {
+class Verify extends React.Component {
 
     render() {
         const { location } = this.props;

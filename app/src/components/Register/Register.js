@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import Template from './templates/Register';
+import React from 'react';
+import Template from './Template';
+import { register } from '../../actions';
 import isEmail from 'validator/lib/isEmail';
-import { register } from '../actions';
-import { getReturnUrl, isEmbedded, addQuery } from '../helpers';
+import { getReturnUrl, isEmbedded, addQuery } from '../../helpers';
 
-class Register extends Component {
+class Register extends React.Component {
 
     state = {
         email: '',
@@ -14,7 +14,7 @@ class Register extends Component {
             email: '',
             password: '',
             password2: '',
-            registration: ''
+            server: ''
         },
         processing: false
     }
@@ -42,14 +42,12 @@ class Register extends Component {
 
             register(this.state.email, this.state.password).then(result => {
                 if (result.success) {
-                    history.push('/register/success' + addQuery(history.location.search, `username=${encodeURIComponent(this.state.email)}`));
+                    history.push('/activate-account' + addQuery(history.location.search, `username=${encodeURIComponent(this.state.email)}`));
                 }
                 else {
-                    const message = result.error.hasMessage
-                        ? result.error.message
-                        : 'Sorry! Something\'s gone wrong.  Please try again later.';
+                    const message = result.error.message || 'Sorry, something\'s gone wrong.  Please try again later.';
 
-                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, registration: message } }));
+                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, server: message } }));
                 }
             });
         }
@@ -62,7 +60,7 @@ class Register extends Component {
             email: '',
             password: '',
             password2: '',
-            registration: ''
+            server: ''
         }
 
         const { email, password, password2 } = this.state;

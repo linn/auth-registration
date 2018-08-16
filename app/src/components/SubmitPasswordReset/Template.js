@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TextInput, Button, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
 
-class SubmitPasswordReset extends Component {
+class Template extends React.Component {
 
     render() {
         document.title = 'Reset your password | Linn';
@@ -12,7 +12,7 @@ class SubmitPasswordReset extends Component {
             <Container embedded={embedded} >
                 <Header caption="Password Reset" />
                 <form onSubmit={onSubmit}>
-                    {errors.passwordReset && <ErrorMessage message={errors.passwordReset} />}
+                    {errors.server && <ErrorMessage message={errors.server} />}
                     <ControlGroup>
                         <TextInput
                             autofocus={true}
@@ -50,4 +50,4 @@ class SubmitPasswordReset extends Component {
     }
 }
 
-export default SubmitPasswordReset;
+export default Template;

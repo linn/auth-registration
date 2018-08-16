@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TextInput, Button, Cancel, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
 
-class RegisterSuccess extends Component {
+class Template extends React.Component {
 
     render() {
         document.title = 'Register for a Linn account | Linn';
@@ -10,18 +10,15 @@ class RegisterSuccess extends Component {
 
         return (
             <Container embedded={embedded} >
-                <Header caption="Thanks!" />
+                <Header caption="Activate your account" />
 
-                <p>We've created your account.</p>
-
-                <p>Before you can login, you need to verify your email address.</p>
+                <p>Before you can log in, we need to verify your email address.</p>
 
                 <p>You should shortly receive a email from us containing a six-character activation code.</p>
 
                 <p>Enter the code below to activate your account.</p>
 
                 <form onSubmit={onSubmit}>
-                    {errors.registration && <ErrorMessage message={errors.registration} />}
                     <ControlGroup>
                         <TextInput
                             autofocus={true}
@@ -35,12 +32,13 @@ class RegisterSuccess extends Component {
                             disabled={processing}
                             embedded={embedded} />
                     </ControlGroup>
+                    {errors.server && <ErrorMessage message={errors.server} />}
                     <ControlGroup padding="30px">
                         {processing
                             ? <Processing embedded={embedded} />
                             : <React.Fragment>
                                 <Button caption="Submit" type="submit" disabled={processing} embedded={embedded} />
-                                {returnUrl && <span style={{marginTop:'30px', display: 'block'}}>Or return to the <a href={returnUrl}>login page</a>.</span>}
+                                {returnUrl && <span style={{ marginTop: '30px', display: 'block' }}>Or return to the <a href={returnUrl}>login page</a>.</span>}
                             </React.Fragment>
                         }
                     </ControlGroup>
@@ -50,4 +48,4 @@ class RegisterSuccess extends Component {
     }
 }
 
-export default RegisterSuccess;
+export default Template;

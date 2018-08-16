@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import Template from './templates/RegisterSuccess';
-import { verify } from '../actions';
-import { getReturnUrl, getUsername, isEmbedded } from '../helpers';
+import React from 'react';
+import Template from './Template';
+import { verify } from '../../actions';
+import { getReturnUrl, getUsername, isEmbedded } from '../../helpers';
 
-class RegisterSuccess extends Component {
+class ActivateAccount extends React.Component {
     state = {
         activationCode: '',
         errors: {
             activationCode: '',
-            verification: ''
+            server: ''
         },
         processing: false
     }
@@ -32,19 +32,19 @@ class RegisterSuccess extends Component {
         if (this.validate()) {
             this.setState({ processing: true });
 
-            const username= getUsername(location.search);
+            const username = getUsername(location.search);
 
             verify(this.state.activationCode, username).then(result => {
 
                 if (result.success) {
-                    history.push('/register/success' + history.location.search);
+                    history.push('/activate-account/success' + history.location.search);
                 }
                 else {
-                    const message = result.error.hasMessage
-                        ? result.error.message
-                        : 'Sorry! Something\'s gone wrong.  Please try again later.';
+                    const message = result.error.response.status === 404
+                        ? 'Sorry, that activation code can\'t be matched.'
+                        : result.error.message || 'Sorry, something\'s gone wrong.  Please try again later.';
 
-                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, registration: message } }));
+                    this.setState(prev => ({ ...prev, processing: false, errors: { ...prev.errors, server: message } }));
                 }
             });
         }
@@ -54,10 +54,8 @@ class RegisterSuccess extends Component {
         let valid = true;
 
         const errors = {
-            email: '',
-            password: '',
-            password2: '',
-            registration: ''
+            activationCode: '',
+            server: ''
         }
 
         const { activationCode } = this.state;
@@ -77,4 +75,4 @@ class RegisterSuccess extends Component {
     }
 }
 
-export default RegisterSuccess;
+export default ActivateAccount;

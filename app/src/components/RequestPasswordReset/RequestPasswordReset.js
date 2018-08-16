@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import Template from './templates/RequestPasswordReset';
+import React from 'react';
+import Template from './Template';
+import { requestPasswordReset } from '../../actions';
 import isEmail from 'validator/lib/isEmail';
-import { requestPasswordReset } from '../actions';
-import { getReturnUrl, isEmbedded } from '../helpers';
+import { getReturnUrl, isEmbedded } from '../../helpers';
 
-class RequestPasswordReset extends Component {
+class RequestPasswordReset extends React.Component {
 
     state = {
         email: '',
         errors: {
             email: '',
-            passwordReset: ''
+            server: ''
         },
         processing: false
     }
@@ -37,11 +37,11 @@ class RequestPasswordReset extends Component {
                     history.push('/password-reset/success' + history.location.search);
                 }
                 else {
-                    const message = result.error.hasMessage
-                        ? result.error.message
-                        : 'Sorry! Something\'s gone wrong.  Please try again later.';
+                    const message = result.error.response.status === 404
+                        ? 'Sorry, we can’t find an account with that email.'
+                        : result.error.message || 'Sorry, something\'s gone wrong.  Please try again later.';
 
-                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, passwordReset: message } }));
+                    this.setState((prev) => ({ ...prev, processing: false, errors: { ...prev.errors, server: message } }));
                 }
             });
         }
@@ -52,7 +52,7 @@ class RequestPasswordReset extends Component {
 
         const errors = {
             email: '',
-            passwordReset: ''
+            server: ''
         }
 
         const { email } = this.state;

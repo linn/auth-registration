@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const style = padding => ({
     padding: `${padding} 0`
 });
 
-export class ControlGroup extends Component {
+export class ControlGroup extends React.Component {
     render() {
         const { children, padding = '10px'  } = this.props;
 

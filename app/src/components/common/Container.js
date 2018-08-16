@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const style = embedded => ({
     margin: '0 auto',
@@ -6,7 +6,7 @@ const style = embedded => ({
     padding: embedded ? '30px' : '50px'
 });
 
-export class Container extends Component {
+export class Container extends React.Component {
     render() {
         const { children, embedded = false  } = this.props;
 

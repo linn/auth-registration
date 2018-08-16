@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const pug = require('pug');
+require('pug');
 
 const app = express()
 

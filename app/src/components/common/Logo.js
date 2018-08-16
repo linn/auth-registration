@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const style = {
     backgroundColor: '#373946',
@@ -6,7 +6,7 @@ const style = {
     position: 'relative'
 };
 
-export class Logo extends Component {
+export class Logo extends React.Component {
     render() {
         return (
             <svg width="73" height="20" viewBox="0 0 73 20" version="1.1">
