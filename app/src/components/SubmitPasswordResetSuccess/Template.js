@@ -11,7 +11,7 @@ class Template extends React.Component {
         return (
             <Container embedded={embedded}>
                 <Header caption="Success!" />
-                <p>You're password has been updated.</p>
+                <p>Your password has been updated.</p>
 
                 {returnUrl
                     ? <p>Return to the <a href={returnUrl}>login page</a>.</p>

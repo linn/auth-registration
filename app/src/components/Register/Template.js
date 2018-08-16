@@ -50,7 +50,8 @@ class Template extends React.Component {
                             disabled={processing}
                             embedded={embedded} />
                     </ControlGroup>
-                    <ControlGroup padding="30px">
+                    <p>By clicking “Register” below, you confirm that you understand and agree to our <a href="/privacy" target="_blank">privacy policy</a>.</p>
+                    <ControlGroup>
                         {processing
                             ? <Processing embedded={embedded} />
                             : <React.Fragment>
