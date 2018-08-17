@@ -7,7 +7,9 @@ const post = (uri, body) => postJson(`${config.wwwRoot}${uri}`, body)
 
 export const register = (username, password) => post('/api/register', { username, password });
 
-export const verify = (activationCode, username) => post('/api/activate-account', { activationCode, username });
+export const activate = (activationCode, username) => post('/api/activate-account', { activationCode, username });
+
+export const verify = registrationRequestId => post('/api/activate-account', { registrationRequestId });
 
 export const requestPasswordReset = email => post('/api/password-reset', { email });
 

@@ -4,9 +4,9 @@ import { Header, Container } from '../common';
 class Template extends React.Component {
 
     render() {
-        document.title = 'Reset your password | Linn';
-
         const { embedded, returnUrl } = this.props;
+
+        document.title = 'Reset your password | Linn';
 
         return (
             <Container embedded={embedded}>

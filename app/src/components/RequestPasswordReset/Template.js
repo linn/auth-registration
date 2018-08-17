@@ -4,9 +4,9 @@ import { TextInput, Button, Cancel, ControlGroup, Header, Container, ErrorMessag
 class Template extends React.Component {
 
     render() {
-        document.title = 'Reset your password | Linn';
-
         const { processing, email, errors, onSubmit, onEmailChange, embedded, returnUrl } = this.props;
+
+        document.title = 'Reset your password | Linn';
 
         return (
             <Container embedded={embedded} >

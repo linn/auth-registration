@@ -25,7 +25,7 @@ class Register extends React.Component {
         return <Template
             {...this.state}
             embedded={isEmbedded(location.search)}
-            returnUrl={getReturnUrl(location.search)}
+            returnUrl={location.href}
             onSubmit={e => this.handleSubmit(e)}
             onEmailChange={email => this.setState({ email })}
             onPasswordChange={password => this.setState({ password })}

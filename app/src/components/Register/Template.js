@@ -1,12 +1,12 @@
 import React from 'react';
 import { TextInput, Button, Cancel, ControlGroup, Header, Container, ErrorMessage, Processing } from '../common';
-
+import PrivacyLink from './PrivacyLink';
 class Template extends React.Component {
 
     render() {
-        document.title = 'Register for a Linn account | Linn';
-
         const { processing, email, password, password2, errors, onSubmit, onEmailChange, onPasswordChange, onPassword2Change, embedded, returnUrl } = this.props;
+
+        document.title = 'Register for a Linn account | Linn';
 
         return (
             <Container embedded={embedded} >
@@ -50,7 +50,7 @@ class Template extends React.Component {
                             disabled={processing}
                             embedded={embedded} />
                     </ControlGroup>
-                    <p>By clicking “Register” below, you confirm that you understand and agree to our <a href="/privacy" target="_blank">privacy policy</a>.</p>
+                    <p>By clicking “Register” below, you confirm that you understand and agree to our <PrivacyLink embedded={embedded} />.</p>
                     <ControlGroup>
                         {processing
                             ? <Processing embedded={embedded} />

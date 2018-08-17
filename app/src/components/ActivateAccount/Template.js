@@ -4,9 +4,9 @@ import { TextInput, Button, Cancel, ControlGroup, Header, Container, ErrorMessag
 class Template extends React.Component {
 
     render() {
-        document.title = 'Register for a Linn account | Linn';
-
         const { processing, activationCode, errors, onSubmit, onActivationCodeChange, embedded, returnUrl } = this.props;
+
+        document.title = 'Register for a Linn account | Linn';
 
         return (
             <Container embedded={embedded} >

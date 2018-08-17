@@ -1,6 +1,6 @@
 import React from 'react';
 import Template from './Template';
-import { verify } from '../../actions';
+import { activate } from '../../actions';
 import { getReturnUrl, getUsername, isEmbedded } from '../../helpers';
 
 class ActivateAccount extends React.Component {
@@ -34,7 +34,7 @@ class ActivateAccount extends React.Component {
 
             const username = getUsername(location.search);
 
-            verify(this.state.activationCode, username).then(result => {
+            activate(this.state.activationCode, username).then(result => {
 
                 if (result.success) {
                     history.push('/activate-account/success' + history.location.search);

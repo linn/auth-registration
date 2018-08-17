@@ -4,9 +4,9 @@ import { TextInput, Button, ControlGroup, Header, Container, ErrorMessage, Proce
 class Template extends React.Component {
 
     render() {
-        document.title = 'Reset your password | Linn';
-
         const { processing, password, password2, errors, onSubmit, onPasswordChange, onPassword2Change, embedded } = this.props;
+
+        document.title = 'Reset your password | Linn';
 
         return (
             <Container embedded={embedded} >

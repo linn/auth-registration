@@ -4,9 +4,9 @@ import { Header, Container, LinkButton, ControlGroup } from '../common';
 class Template extends React.Component {
 
     render() {
-        document.title = 'Register for a Linn account | Linn';
-
         const { embedded, returnUrl } = this.props;
+
+        document.title = 'Register for a Linn account | Linn';
 
         return (
             <Container embedded={embedded} >

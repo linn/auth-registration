@@ -17,6 +17,8 @@ export const getReturnUrl = search => getQueryParameter(search, 'returnUrl');
 
 export const getUsername = search => getQueryParameter(search, 'username');
 
+export const getSuccess = search => search.includes('success');
+
 export const isEmbedded = search => search.includes('embedded=true');
 
 export const addQuery = (search, query) => {
@@ -24,3 +26,5 @@ export const addQuery = (search, query) => {
         ? `${search}&${query}`
         : `?${query}`;
 };
+
+export const getSuccessPath = location =>  location.pathname + addQuery( location.search, 'success');

@@ -1,28 +1,41 @@
 import React from 'react';
-import { Header, Container } from '../common';
-import { getReturnUrl } from '../../helpers';
+import PendingTemplate from './PendingTemplate';
+import SuccessTemplate from './SuccessTemplate';
+import FailureTemplate from './FailureTemplate';
+import { verify } from '../../actions';
+import { getSuccess, getSuccessPath } from '../../helpers';
 
 class Verify extends React.Component {
 
+    state = {
+        error: '',
+        pending: true
+    };
+
     render() {
-        const { location } = this.props;
-        const search = location.search;
-
         document.title = 'Verify your email | Linn';
-        // show a processing thingy until we know if the verification was successful or not
 
-        return (
-            <Container>
-                <Header caption="Verify!" />
-            </Container>
-        );
+        return this.state.pending
+            ? <PendingTemplate />
+            : getSuccess(this.props.location.search)
+                ? <SuccessTemplate />
+                : <FailureTemplate error={this.state.error} />;
     }
 
-        componentDidMount() {
-        alert('call the service!');
-        // Set processing = true
-    }
+    componentDidMount() {
+        const { location, match, history } = this.props;
 
+        setTimeout(() => verify(match.params.id).then(result => {
+            if (result.success) {
+                history.push(getSuccessPath(location));
+                this.setState({ pending: false });
+            }
+            else {
+                const error = result.error.message || 'Sorry, we were unable to process your request.';
+                this.setState({ pending: false, error });
+            }
+        }), 1000);
+    }
 }
 
 export default Verify;
