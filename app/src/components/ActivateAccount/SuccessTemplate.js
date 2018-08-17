@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, Container, LinkButton, ControlGroup } from '../common';
 
-class Template extends React.Component {
+class SuccessTemplate extends React.Component {
 
     render() {
         const { embedded, returnUrl } = this.props;
@@ -21,4 +21,4 @@ class Template extends React.Component {
     }
 }
 
-export default Template;
+export default SuccessTemplate;

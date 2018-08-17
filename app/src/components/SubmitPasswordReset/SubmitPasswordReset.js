@@ -1,7 +1,8 @@
 import React from 'react';
 import Template from './Template';
+import SuccessTemplate from './SuccessTemplate';
 import { submitPasswordReset } from '../../actions';
-import { isEmbedded } from '../../helpers';
+import { getSuccess, getSuccessPath, getReturnUrl, isEmbedded } from '../../helpers';
 
 class SubmitPasswordReset extends React.Component {
 
@@ -17,13 +18,18 @@ class SubmitPasswordReset extends React.Component {
     }
 
     render() {
-        return <Template
-            {...this.state}
-            embedded={isEmbedded(location.search)}
-            onSubmit={e => this.handleSubmit(e)}
-            onPasswordChange={password => this.setState({ password })}
-            onPassword2Change={password2 => this.setState({ password2 })}
-        />
+        return getSuccess(this.props.location.search)
+            ? <SuccessTemplate
+                embedded={isEmbedded(location.search)}
+                returnUrl={getReturnUrl(location.search)}
+            />
+            : <Template
+                {...this.state}
+                embedded={isEmbedded(location.search)}
+                onSubmit={e => this.handleSubmit(e)}
+                onPasswordChange={password => this.setState({ password })}
+                onPassword2Change={password2 => this.setState({ password2 })}
+            />;
     }
 
     handleSubmit(e) {
@@ -36,7 +42,7 @@ class SubmitPasswordReset extends React.Component {
 
             submitPasswordReset(id, this.state.password).then(result => {
                 if (result.success) {
-                    history.push(`/password-reset/${id}/success` + history.location.search);
+                    history.push(getSuccessPath(history.location));
                 }
                 else {
                     const message = result.error.message || 'Sorry, something\'s gone wrong.  Please try again later.';

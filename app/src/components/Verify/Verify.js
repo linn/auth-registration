@@ -15,26 +15,28 @@ class Verify extends React.Component {
     render() {
         document.title = 'Verify your email | Linn';
 
-        return this.state.pending
-            ? <PendingTemplate />
-            : getSuccess(this.props.location.search)
-                ? <SuccessTemplate />
+        return getSuccess(this.props.location.search)
+            ? <SuccessTemplate />
+            : this.state.pending
+                ? <PendingTemplate />
                 : <FailureTemplate error={this.state.error} />;
     }
 
     componentDidMount() {
         const { location, match, history } = this.props;
 
-        setTimeout(() => verify(match.params.id).then(result => {
-            if (result.success) {
-                history.push(getSuccessPath(location));
-                this.setState({ pending: false });
-            }
-            else {
-                const error = result.error.message || 'Sorry, we were unable to process your request.';
-                this.setState({ pending: false, error });
-            }
-        }), 1000);
+        if (!getSuccess(this.props.location.search)) {
+            setTimeout(() => verify(match.params.id).then(result => {
+                if (result.success) {
+                    history.push(getSuccessPath(location));
+                    this.setState({ pending: false });
+                }
+                else {
+                    const error = result.error.message || 'Sorry, we were unable to process your request.';
+                    this.setState({ pending: false, error });
+                }
+            }), 1000);
+        }
     }
 }
 

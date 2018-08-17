@@ -1,7 +1,8 @@
 import React from 'react';
 import Template from './Template';
+import SuccessTemplate from './SuccessTemplate';
 import { activate } from '../../actions';
-import { getReturnUrl, getUsername, isEmbedded } from '../../helpers';
+import { getSuccess, getSuccessPath, getReturnUrl, getUsername, isEmbedded } from '../../helpers';
 
 class ActivateAccount extends React.Component {
     state = {
@@ -16,13 +17,18 @@ class ActivateAccount extends React.Component {
     render() {
         const { location } = this.props;
 
-        return <Template
-            {...this.state}
-            embedded={isEmbedded(location.search)}
-            returnUrl={getReturnUrl(location.search)}
-            onSubmit={e => this.handleSubmit(e)}
-            onActivationCodeChange={activationCode => this.setState({ activationCode })}
-        />;
+        return getSuccess(this.props.location.search)
+            ? <SuccessTemplate
+                embedded={isEmbedded(location.search)}
+                returnUrl={getReturnUrl(location.search)}
+            />
+            : <Template
+                {...this.state}
+                embedded={isEmbedded(location.search)}
+                returnUrl={getReturnUrl(location.search)}
+                onSubmit={e => this.handleSubmit(e)}
+                onActivationCodeChange={activationCode => this.setState({ activationCode })}
+            />;
     }
 
     handleSubmit(e) {
@@ -35,9 +41,8 @@ class ActivateAccount extends React.Component {
             const username = getUsername(location.search);
 
             activate(this.state.activationCode, username).then(result => {
-
                 if (result.success) {
-                    history.push('/activate-account/success' + history.location.search);
+                    history.push(getSuccessPath(history.location));
                 }
                 else {
                     const message = result.error.response.status === 404

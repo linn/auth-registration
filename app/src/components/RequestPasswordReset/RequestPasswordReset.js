@@ -1,8 +1,9 @@
 import React from 'react';
 import Template from './Template';
+import SuccessTemplate from './SuccessTemplate';
 import { requestPasswordReset } from '../../actions';
 import isEmail from 'validator/lib/isEmail';
-import { getReturnUrl, isEmbedded } from '../../helpers';
+import { getSuccess, getSuccessPath, getReturnUrl, isEmbedded } from '../../helpers';
 
 class RequestPasswordReset extends React.Component {
 
@@ -16,13 +17,18 @@ class RequestPasswordReset extends React.Component {
     }
 
     render() {
-        return <Template
-            {...this.state}
-            embedded={isEmbedded(location.search)}
-            returnUrl={getReturnUrl(location.search)}
-            onSubmit={e => this.handleSubmit(e)}
-            onEmailChange={email => this.setState({ email })}
-        />
+        return getSuccess(this.props.location.search)
+            ? <SuccessTemplate
+                embedded={isEmbedded(location.search)}
+                returnUrl={getReturnUrl(location.search)}
+            />
+            : <Template
+                {...this.state}
+                embedded={isEmbedded(location.search)}
+                returnUrl={getReturnUrl(location.search)}
+                onSubmit={e => this.handleSubmit(e)}
+                onEmailChange={email => this.setState({ email })}
+            />;
     }
 
     handleSubmit(e) {
@@ -34,7 +40,7 @@ class RequestPasswordReset extends React.Component {
 
             requestPasswordReset(this.state.email).then(result => {
                 if (result.success) {
-                    history.push('/password-reset/success' + history.location.search);
+                    history.push(getSuccessPath(history.location));
                 }
                 else {
                     const message = result.error.response.status === 404
