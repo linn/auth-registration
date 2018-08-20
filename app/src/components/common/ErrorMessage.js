@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const styles = {
     outer: {
@@ -20,7 +20,7 @@ const styles = {
     }
 };
 
-export class ErrorMessage extends Component {
+export class ErrorMessage extends React.Component {
     render() {
         const { message } = this.props;
 

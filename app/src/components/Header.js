@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Logo } from './common';
 import { isEmbedded } from '../helpers';
 
@@ -8,7 +8,7 @@ const style = {
     position: 'relative'
 };
 
-class Header extends Component {
+class Header extends React.Component {
     render() {
         const { location } = this.props;
 

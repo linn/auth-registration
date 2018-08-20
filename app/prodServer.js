@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const pug = require('pug');
+require('pug');
 
 const app = express()
 
@@ -10,8 +10,9 @@ app.use('/register/assets', express.static(path.join(__dirname, 'assets')))
 
 const htmlPaths = [
     '/register',
-    '/register/success',
-    '/password-reset*'
+    '/activate-account',
+    '/password-reset*',
+    '/verify/*'
 ];
 
 app.get(htmlPaths, function (req, res) {

@@ -10,7 +10,7 @@ const style = embedded => ({
     minHeight: embedded ? '42px' : '62px'
 });
 
-export const Processing = (embedded = false) => (
+export const Processing = ({embedded = false}) => (
     <div style={style(embedded)}>
         <Loading />
     </div>

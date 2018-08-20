@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const styles = {
     group: {
@@ -25,7 +25,7 @@ const styles = {
     }
 }
 
-export class TextInput extends Component {
+export class TextInput extends React.Component {
     render() {
         const { name, type = 'text', caption, placeholder, error, value, disabled = false, embedded = false } = this.props;
 

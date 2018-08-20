@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const style = {
         borderBottom: '1px solid #ccc',
@@ -9,7 +9,7 @@ const style = {
         fontWeight: 'normal'
 };
 
-export class Header extends Component {
+export class Header extends React.Component {
     render() {
         const { caption  } = this.props;
 

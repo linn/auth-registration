@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Header, Container } from './common';
 
-class NotFound extends Component {
+class NotFound extends React.Component {
 
     render() {
         document.title = 'Not Found | Linn';

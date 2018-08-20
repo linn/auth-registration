@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const styles = {
     base: embedded =>
@@ -25,7 +25,7 @@ const styles = {
     }
 };
 
-export class Button extends Component {
+export class Button extends React.Component {
     state = {
         hovering: false
     }
