@@ -12,7 +12,7 @@ const htmlPaths = [
     '/register',
     '/activate-account',
     '/password-reset*',
-    '/verify/*'
+    '/verify*'
 ];
 
 app.get(htmlPaths, function (req, res) {
