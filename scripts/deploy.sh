@@ -40,7 +40,7 @@ else
 fi
 
 # load the secret variables but hide the output from the travis log
-# source ./secrets.env > /dev/null
+# source ./secrets.env > /dev/null 2>&1
 
 # deploy the service to amazon
 aws cloudformation deploy --stack-name $STACK_NAME --template-file ./aws/application.yml --parameter-overrides dockerTag=$TRAVIS_BUILD_NUMBER wwwRoot=$WWW_ROOT environmentSuffix=$ENV_SUFFIX --capabilities=CAPABILITY_IAM
