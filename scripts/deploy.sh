@@ -16,10 +16,8 @@ if [ "${TRAVIS_BRANCH}" = "master" ]; then
     # aws s3 cp s3://users-ci-ciconfigurationbucket-rgg86pk2weco/pricing/production.env ./secrets.env
 
     STACK_NAME=auth-registration
-    TARGET_CLUSTER=internal-colony
     WWW_ROOT=https://www.linn.co.uk
 	  ENV_SUFFIX=
-    DESIRED_COUNT=2
   else
     # pull request based on master - deploy to sys
     echo deploy to sys
@@ -27,28 +25,24 @@ if [ "${TRAVIS_BRANCH}" = "master" ]; then
     # aws s3 cp s3://users-ci-ciconfigurationbucket-rgg86pk2weco/pricing/sys.env ./secrets.env
 
     STACK_NAME=auth-registration-sys
-    TARGET_CLUSTER=internal-colony-test
     WWW_ROOT=https://www-sys.linn.co.uk
     ENV_SUFFIX=-sys
-    DESIRED_COUNT=1
   fi
-else 
-  # not master - deploy to int 
+else
+  # not master - deploy to int
   echo deploy to int
 
   #  aws s3 cp s3://users-ci-ciconfigurationbucket-rgg86pk2weco/pricing/int.env ./secrets.env
-  
+
    STACK_NAME=auth-registration-int
-   TARGET_CLUSTER=internal-colony-test
    WWW_ROOT=https://www-int.linn.co.uk
    ENV_SUFFIX=-int
-   DESIRED_COUNT=1
 fi
 
 # load the secret variables but hide the output from the travis log
-# source ./secrets.env > /dev/null
+# source ./secrets.env > /dev/null 2>&1
 
 # deploy the service to amazon
-aws cloudformation deploy --stack-name $STACK_NAME --template-file ./aws/application.yml --parameter-overrides dockerTag=$TRAVIS_BUILD_NUMBER targetCluster=$TARGET_CLUSTER wwwRoot=$WWW_ROOT desiredCount=$DESIRED_COUNT environmentSuffix=$ENV_SUFFIX --capabilities=CAPABILITY_IAM
+aws cloudformation deploy --stack-name $STACK_NAME --template-file ./aws/application.yml --parameter-overrides dockerTag=$TRAVIS_BUILD_NUMBER wwwRoot=$WWW_ROOT environmentSuffix=$ENV_SUFFIX --capabilities=CAPABILITY_IAM
 
 echo "deploy complete"
